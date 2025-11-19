@@ -1,7 +1,7 @@
 import { beforeEach, test, expect } from '@jest/globals'
 import * as GetFonts from '../src/parts/GetFonts/GetFonts.ts'
-import { mockOffscreenCanvas } from '../src/parts/MockOffscreenCanvas/MockOffscreenCanvas.ts'
 import { mockFonts } from '../src/parts/MockFonts/MockFonts.ts'
+import { mockOffscreenCanvas } from '../src/parts/MockOffscreenCanvas/MockOffscreenCanvas.ts'
 
 mockFonts({ mockDocument: true })
 
