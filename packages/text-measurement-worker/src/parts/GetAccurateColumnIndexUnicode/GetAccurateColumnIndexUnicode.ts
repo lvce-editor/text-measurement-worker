@@ -10,7 +10,7 @@ export const getAccurateColumnIndexUnicode = (
   fontSize: number,
   fontFamily: string,
   letterSpacing: number,
-) => {
+): number => {
   const segmenter = TextSegmenter.create()
   const segments = segmenter.getSegments(line)
   const isMonospaceFont = false

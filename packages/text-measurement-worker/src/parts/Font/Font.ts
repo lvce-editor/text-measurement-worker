@@ -1,7 +1,7 @@
 import * as FontState from '../FontState/FontState.ts'
 import * as LoadFont from '../LoadFont/LoadFont.ts'
 
-export const ensure = async (fontName: string, fontUrl: string) => {
+export const ensure = async (fontName: string, fontUrl: string): Promise<void> => {
   if (FontState.isLoaded(fontName)) {
     return
   }
