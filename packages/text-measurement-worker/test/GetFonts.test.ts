@@ -18,6 +18,8 @@ test('getFonts returns document.fonts when globalThis.fonts is not available', (
     add: () => {},
   } as unknown as FontFaceSet
 
+  // @ts-ignore
+  delete globalThis.fonts
   mockFonts({ fonts: mockFontFaceSet, mockDocument: true, useGlobalFonts: false })
 
   const result = GetFonts.getFonts()
