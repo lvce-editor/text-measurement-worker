@@ -62,7 +62,26 @@ class MockOffscreenCanvas {
   }
 }
 
-export function mockOffscreenCanvas(): void {
+export function mockOffscreenCanvas(): {
+  readonly [Symbol.dispose]: () => void
+} {
+  // Store original value for cleanup
+  // @ts-ignore
+  const originalOffscreenCanvas = globalThis.OffscreenCanvas
+
   // @ts-expect-error - Adding global OffscreenCanvas
   globalThis.OffscreenCanvas = MockOffscreenCanvas as typeof OffscreenCanvas
+
+  return {
+    [Symbol.dispose]: (): void => {
+      // Restore original OffscreenCanvas
+      if (originalOffscreenCanvas === undefined) {
+        // @ts-ignore
+        delete globalThis.OffscreenCanvas
+      } else {
+        // @ts-ignore
+        globalThis.OffscreenCanvas = originalOffscreenCanvas
+      }
+    },
+  }
 }
