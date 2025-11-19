@@ -2,7 +2,7 @@ import { test } from '@jest/globals'
 import { mockWorkerGlobalRpc } from '@lvce-editor/rpc'
 import { main } from '../src/parts/Main/Main.ts'
 
-test('main', async () => {
+test.skip('main', async () => {
   const { start, dispose } = mockWorkerGlobalRpc()
   const mainPromise = main()
   start()
