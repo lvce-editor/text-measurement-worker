@@ -19,20 +19,9 @@ test('createMeasureContext creates canvas with 0x0 dimensions', () => {
 })
 
 test('createMeasureContext throws error when getContext returns null', () => {
-  class MockOffscreenCanvasNullContext {
-    width: number = 0
-    height: number = 0
-    getContext(): null {
-      return null
-    }
-  }
-  const originalOffscreenCanvas = globalThis.OffscreenCanvas
-  // @ts-expect-error - Overriding global OffscreenCanvas
-  globalThis.OffscreenCanvas = MockOffscreenCanvasNullContext as typeof OffscreenCanvas
+  using _ = mockOffscreenCanvas({ '2dContextAvailable': false })
 
   expect(() => {
     createMeasureContext()
   }).toThrow('Failed to get canvas context 2d')
-
-  globalThis.OffscreenCanvas = originalOffscreenCanvas
 })
