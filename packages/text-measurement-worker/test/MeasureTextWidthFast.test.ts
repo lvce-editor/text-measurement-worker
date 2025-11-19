@@ -1,10 +1,5 @@
-import { beforeEach, expect, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import * as MeasureTextWidthFast from '../src/parts/MeasureTextWidthFast/MeasureTextWidthFast.ts'
-import { mockOffscreenCanvas } from '../src/parts/MockOffscreenCanvas/MockOffscreenCanvas.ts'
-
-beforeEach(() => {
-  mockOffscreenCanvas()
-})
 
 test('measureTextWidthFast with single character', () => {
   expect(MeasureTextWidthFast.measureTextWidthFast('a', 10)).toBe(10)

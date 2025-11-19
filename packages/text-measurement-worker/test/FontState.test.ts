@@ -1,10 +1,5 @@
-import { beforeEach, expect, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import * as FontState from '../src/parts/FontState/FontState.ts'
-import { mockOffscreenCanvas } from '../src/parts/MockOffscreenCanvas/MockOffscreenCanvas.ts'
-
-beforeEach(() => {
-  mockOffscreenCanvas()
-})
 
 test('setPending and getPending - stores and retrieves pending promise', () => {
   const id = 'test-font'

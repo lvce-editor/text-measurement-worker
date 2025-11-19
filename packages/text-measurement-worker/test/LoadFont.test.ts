@@ -1,11 +1,6 @@
 /** @jest-environment jsdom */
-import { beforeEach, expect, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import * as LoadFont from '../src/parts/LoadFont/LoadFont.ts'
-import { mockOffscreenCanvas } from '../src/parts/MockOffscreenCanvas/MockOffscreenCanvas.ts'
-
-beforeEach(() => {
-  mockOffscreenCanvas()
-})
 
 test('loadFont - success', async () => {
   const fontName = 'TestFont'
