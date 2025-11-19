@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-negated-condition */
 /* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 interface MockFontFaceCall {
   readonly name: string
@@ -78,9 +79,7 @@ export function mockFonts(options: MockFontsOptions = {}): MockFontsReturn {
     // Default mock FontFace constructor
     // @ts-ignore - Setting global FontFace
     globalThis.FontFace = function (name: string, url: string, options?: FontFaceDescriptors): FontFace {
-      fontFaceCalls.push(
-        options !== undefined ? { name, url, options } : { name, url },
-      )
+      fontFaceCalls.push(options !== undefined ? { name, url, options } : { name, url })
       const mockFontFace = {
         load: async (): Promise<FontFace> => {
           loadCalls.push(mockFontFace)
