@@ -7,15 +7,15 @@ test('loadFont - success', async () => {
   let fontFaceConstructorCalled = false
   let fontFaceConstructorArgs: any[] = []
   const mockFontFace = {
-    load: async () => {},
+    load: async (): Promise<void> => {},
   }
   const addedFontFaces: any[] = []
   const mockFontFaceSet = {
-    add: (fontFace: any) => {
+    add: (fontFace: any): void => {
       addedFontFaces.push(fontFace)
     },
   }
-  const FontFaceConstructor = function (...args: any[]) {
+  const FontFaceConstructor = function (...args: readonly any[]): any {
     fontFaceConstructorCalled = true
     fontFaceConstructorArgs = args
     return mockFontFace
@@ -58,12 +58,12 @@ test('loadFont - throws VError when FontFace.load fails', async () => {
   const fontUrl = 'url(./test-font.woff2)'
   const loadError = new Error('Failed to load font file')
   const mockFontFace = {
-    load: async () => {
+    load: async (): Promise<void> => {
       throw loadError
     },
   }
   const mockFontFaceSet = {
-    add: () => {},
+    add: (): void => {},
   }
   const FontFaceConstructor = function () {
     return mockFontFace
