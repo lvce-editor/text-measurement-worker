@@ -2,9 +2,7 @@ import { beforeEach, test, expect } from '@jest/globals'
 import * as GetFonts from '../src/parts/GetFonts/GetFonts.ts'
 import { mockOffscreenCanvas } from '../src/parts/MockOffscreenCanvas/MockOffscreenCanvas.ts'
 
-// @ts-ignore
 if (!('document' in globalThis)) {
-  // @ts-ignore
   Object.defineProperty(globalThis, 'document', {
     value: {
       fonts: undefined,
