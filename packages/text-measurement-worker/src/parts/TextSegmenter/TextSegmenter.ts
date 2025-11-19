@@ -10,7 +10,6 @@ export const supported = (): boolean => {
 }
 
 export const create = (): TextSegmenterAdapter => {
-  // @ts-ignore
   const segmenter = new Intl.Segmenter()
   return {
     at(line: string, index: number): Intl.SegmentData | undefined {

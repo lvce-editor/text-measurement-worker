@@ -1,6 +1,11 @@
 /* eslint-disable unicorn/consistent-function-scoping */
-import { expect, test } from '@jest/globals'
+import { beforeEach, expect, test } from '@jest/globals'
 import * as MeasureTextWidthState from '../src/parts/MeasureTextWidthState/MeasureTextWidthState.ts'
+import { mockOffscreenCanvas } from '../src/parts/MockOffscreenCanvas/MockOffscreenCanvas.ts'
+
+beforeEach(() => {
+  mockOffscreenCanvas()
+})
 
 test('getOrCreate - creates context and returns it', () => {
   let createCallCount = 0
