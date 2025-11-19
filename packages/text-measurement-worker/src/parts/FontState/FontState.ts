@@ -1,5 +1,5 @@
-const pending = Object.create(null)
-const loaded = Object.create(null)
+const pending: Record<string, Promise<void>> = Object.create(null)
+const loaded: Record<string, boolean> = Object.create(null)
 
 export const setPending = (id: string, promise: Readonly<Promise<void>>): void => {
   pending[id] = promise
