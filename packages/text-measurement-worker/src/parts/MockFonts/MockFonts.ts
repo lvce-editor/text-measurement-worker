@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
-type MockFontsOptions = {
-  fonts?: FontFaceSet
-  FontFaceConstructor?: typeof FontFace
-  useGlobalFonts?: boolean
+interface MockFontsOptions {
+  readonly fonts?: FontFaceSet
+  readonly FontFaceConstructor?: typeof FontFace
+  readonly useGlobalFonts?: boolean
 }
 
 export function mockFonts(options: MockFontsOptions = {}): void {
