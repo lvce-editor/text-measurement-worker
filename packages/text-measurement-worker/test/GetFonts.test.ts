@@ -3,7 +3,7 @@ import * as GetFonts from '../src/parts/GetFonts/GetFonts.ts'
 import { mockOffscreenCanvas } from '../src/parts/MockOffscreenCanvas/MockOffscreenCanvas.ts'
 
 // @ts-ignore
-if (typeof document === 'undefined') {
+if (!('document' in globalThis)) {
   // @ts-ignore
   Object.defineProperty(globalThis, 'document', {
     value: {
