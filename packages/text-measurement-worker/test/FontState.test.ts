@@ -3,9 +3,8 @@ import * as FontState from '../src/parts/FontState/FontState.ts'
 
 test('setPending and getPending - stores and retrieves pending promise', () => {
   const id = 'test-font'
-  const promise = new Promise<void>((resolve) => {
-    resolve()
-  })
+  const { promise, resolve } = Promise.withResolvers<void>()
+  resolve()
 
   FontState.setPending(id, promise)
   const retrieved = FontState.getPending(id)
@@ -24,9 +23,8 @@ test('getPending - returns undefined for non-existent id', () => {
 
 test('hasPending - returns true when pending exists', () => {
   const id = 'test-font'
-  const promise = new Promise<void>((resolve) => {
-    resolve()
-  })
+  const { promise, resolve } = Promise.withResolvers<void>()
+  resolve()
 
   FontState.setPending(id, promise)
   expect(FontState.hasPending(id)).toBe(true)
@@ -41,9 +39,8 @@ test('hasPending - returns false when pending does not exist', () => {
 
 test('removePending - removes pending promise', () => {
   const id = 'test-font'
-  const promise = new Promise<void>((resolve) => {
-    resolve()
-  })
+  const { promise, resolve } = Promise.withResolvers<void>()
+  resolve()
 
   FontState.setPending(id, promise)
   expect(FontState.hasPending(id)).toBe(true)
@@ -78,9 +75,8 @@ test('setLoaded - can set multiple fonts as loaded', () => {
 
 test('pending and loaded states are independent', () => {
   const id = 'test-font-independent'
-  const promise = new Promise<void>((resolve) => {
-    resolve()
-  })
+  const { promise, resolve } = Promise.withResolvers<void>()
+  resolve()
 
   FontState.setPending(id, promise)
   FontState.setLoaded(id)
