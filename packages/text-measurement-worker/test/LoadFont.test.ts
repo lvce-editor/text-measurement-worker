@@ -24,7 +24,7 @@ test('loadFont - success', async () => {
   mockFonts({
     fonts: mockFontFaceSet,
     FontFaceConstructor,
-    useGlobalFonts: true,
+    mockType: 'global',
   })
 
   await LoadFont.loadFont(fontName, fontUrl)
@@ -73,7 +73,7 @@ test('loadFont - throws VError when FontFace.load fails', async () => {
   mockFonts({
     fonts: mockFontFaceSet,
     FontFaceConstructor,
-    useGlobalFonts: true,
+    mockType: 'global',
   })
 
   await expect(LoadFont.loadFont(fontName, fontUrl)).rejects.toThrow('Failed to load font TestFont')

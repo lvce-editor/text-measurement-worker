@@ -2,14 +2,15 @@
 interface MockFontsOptions {
   readonly fonts?: FontFaceSet
   readonly FontFaceConstructor?: typeof FontFace
-  readonly useGlobalFonts?: boolean
-  readonly mockDocument?: boolean
+  readonly mockType?: 'document' | 'global'
 }
 
 export function mockFonts(options: MockFontsOptions = {}): {
   readonly [Symbol.dispose]: () => void
 } {
-  const { fonts, FontFaceConstructor, useGlobalFonts = true, mockDocument = false } = options
+  const { fonts, FontFaceConstructor, mockType = 'global' } = options
+  const useGlobalFonts = mockType === 'global'
+  const mockDocument = mockType === 'document'
 
   // Store original values for cleanup
   // @ts-ignore
@@ -21,10 +22,12 @@ export function mockFonts(options: MockFontsOptions = {}): {
   const documentCreated = mockDocument && !('document' in globalThis)
   const fontFaceWasSet = FontFaceConstructor !== undefined || !('FontFace' in globalThis)
 
+  const fontsToUse = fonts ?? ({} as FontFaceSet)
+
   if (mockDocument && !('document' in globalThis)) {
     Object.defineProperty(globalThis, 'document', {
       value: {
-        fonts: undefined,
+        fonts: fontsToUse,
       },
       writable: true,
       configurable: true,
@@ -32,16 +35,14 @@ export function mockFonts(options: MockFontsOptions = {}): {
     })
   }
 
-  if (fonts !== undefined) {
-    if (useGlobalFonts) {
-      // @ts-ignore - Setting global fonts
-      globalThis.fonts = fonts
-    } else {
+  if (useGlobalFonts) {
+    // @ts-ignore - Setting global fonts
+    globalThis.fonts = fontsToUse
+  } else {
+    // @ts-ignore - Setting document fonts
+    if (globalThis.document) {
       // @ts-ignore - Setting document fonts
-      if (globalThis.document) {
-        // @ts-ignore - Setting document fonts
-        globalThis.document.fonts = fonts
-      }
+      globalThis.document.fonts = fontsToUse
     }
   }
 
@@ -77,7 +78,7 @@ export function mockFonts(options: MockFontsOptions = {}): {
         if (globalThis.document) {
           if (originalDocumentFonts === undefined) {
             // @ts-ignore
-            globalThis.document.fonts = undefined
+            delete globalThis.document.fonts
           } else {
             // @ts-ignore
             globalThis.document.fonts = originalDocumentFonts
