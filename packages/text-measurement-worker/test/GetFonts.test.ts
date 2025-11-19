@@ -1,11 +1,6 @@
 /** @jest-environment jsdom */
-import { beforeEach, test, expect } from '@jest/globals'
-import { mockOffscreenCanvas } from '../src/mockOffscreenCanvas.ts'
+import { test, expect } from '@jest/globals'
 import * as GetFonts from '../src/parts/GetFonts/GetFonts.ts'
-
-beforeEach(() => {
-  mockOffscreenCanvas()
-})
 
 test.skip('getFonts returns globalThis.fonts when available', () => {
   const mockFontFaceSet = {
