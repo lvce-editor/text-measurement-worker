@@ -43,18 +43,27 @@ class MockOffscreenCanvasRenderingContext2D {
   }
 }
 
+interface MockOffscreenCanvasOptions {
+  readonly '2dContextAvailable'?: boolean
+}
+
 // Mock OffscreenCanvas for Node.js environment
 class MockOffscreenCanvas {
   width: number
   height: number
   private context: OffscreenCanvasRenderingContext2D | null = null
+  private readonly contextAvailable: boolean
 
-  constructor(width: number, height: number) {
+  constructor(width: number, height: number, contextAvailable: boolean = true) {
     this.width = width
     this.height = height
+    this.contextAvailable = contextAvailable
   }
 
   getContext(contextType: '2d'): OffscreenCanvasRenderingContext2D | null {
+    if (!this.contextAvailable) {
+      return null
+    }
     if (contextType === '2d' && !this.context) {
       this.context = new MockOffscreenCanvasRenderingContext2D(this as unknown as OffscreenCanvas) as OffscreenCanvasRenderingContext2D
     }
@@ -62,15 +71,24 @@ class MockOffscreenCanvas {
   }
 }
 
-export function mockOffscreenCanvas(): {
+export function mockOffscreenCanvas(options: MockOffscreenCanvasOptions = {}): {
   readonly [Symbol.dispose]: () => void
 } {
+  const { '2dContextAvailable': contextAvailable = true } = options
+
   // Store original value for cleanup
   // @ts-ignore
   const originalOffscreenCanvas = globalThis.OffscreenCanvas
 
+  // Create a factory function that uses the options
+  const MockOffscreenCanvasWithOptions = class extends MockOffscreenCanvas {
+    constructor(width: number, height: number) {
+      super(width, height, contextAvailable)
+    }
+  }
+
   // @ts-expect-error - Adding global OffscreenCanvas
-  globalThis.OffscreenCanvas = MockOffscreenCanvas as typeof OffscreenCanvas
+  globalThis.OffscreenCanvas = MockOffscreenCanvasWithOptions as typeof OffscreenCanvas
 
   return {
     [Symbol.dispose]: (): void => {
