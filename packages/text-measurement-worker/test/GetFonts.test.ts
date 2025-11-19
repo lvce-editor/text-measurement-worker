@@ -1,3 +1,4 @@
+/** @jest-environment jsdom */
 import { test, expect } from '@jest/globals'
 import * as GetFonts from '../src/parts/GetFonts/GetFonts.ts'
 
