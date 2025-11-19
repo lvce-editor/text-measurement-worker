@@ -1,14 +1,29 @@
+/* eslint-disable unicorn/no-negated-condition */
 /* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
+interface MockFontFaceCall {
+  readonly name: string
+  readonly url: string
+  readonly options?: FontFaceDescriptors
+}
+
 interface MockFontsOptions {
   readonly fonts?: FontFaceSet
   readonly FontFaceConstructor?: typeof FontFace
   readonly mockType?: 'document' | 'global'
+  readonly onLoad?: (fontFace: FontFace) => Promise<FontFace> | FontFace
 }
 
-export function mockFonts(options: MockFontsOptions = {}): {
+export interface MockFontsReturn {
   readonly [Symbol.dispose]: () => void
-} {
-  const { fonts, FontFaceConstructor, mockType = 'global' } = options
+  readonly getAddedFonts: () => readonly FontFace[]
+  readonly getFontFaceCalls: () => readonly MockFontFaceCall[]
+  readonly getLoadCalls: () => readonly FontFace[]
+  readonly wasLoadCalled: (fontFace: FontFace) => boolean
+  readonly wasFontFaceCreated: (name: string, url: string) => boolean
+}
+
+export function mockFonts(options: MockFontsOptions = {}): MockFontsReturn {
+  const { fonts, FontFaceConstructor, mockType = 'global', onLoad } = options
   const useGlobalFonts = mockType === 'global'
   const mockDocument = mockType === 'document'
 
@@ -22,7 +37,18 @@ export function mockFonts(options: MockFontsOptions = {}): {
   const documentCreated = mockDocument && !('document' in globalThis)
   const fontFaceWasSet = FontFaceConstructor !== undefined || !('FontFace' in globalThis)
 
-  const fontsToUse = fonts ?? ({} as FontFaceSet)
+  // Track state for query methods
+  const addedFonts: FontFace[] = []
+  const fontFaceCalls: MockFontFaceCall[] = []
+  const loadCalls: FontFace[] = []
+
+  const fontsToUse =
+    fonts ??
+    ({
+      add: (fontFace: FontFace): void => {
+        addedFonts.push(fontFace)
+      },
+    } as unknown as FontFaceSet)
 
   if (mockDocument && !('document' in globalThis)) {
     Object.defineProperty(globalThis, 'document', {
@@ -52,9 +78,14 @@ export function mockFonts(options: MockFontsOptions = {}): {
   } else if (!('FontFace' in globalThis)) {
     // Default mock FontFace constructor
     // @ts-ignore - Setting global FontFace
-    globalThis.FontFace = function (): FontFace {
+    globalThis.FontFace = function (name: string, url: string, options?: FontFaceDescriptors): FontFace {
+      fontFaceCalls.push(options !== undefined ? { name, url, options } : { name, url })
       const mockFontFace = {
         load: async (): Promise<FontFace> => {
+          loadCalls.push(mockFontFace)
+          if (onLoad) {
+            return await onLoad(mockFontFace)
+          }
           return mockFontFace
         },
       } as FontFace
@@ -102,6 +133,21 @@ export function mockFonts(options: MockFontsOptions = {}): {
         // @ts-ignore
         delete globalThis.document
       }
+    },
+    getAddedFonts: (): readonly FontFace[] => {
+      return addedFonts
+    },
+    getFontFaceCalls: (): readonly MockFontFaceCall[] => {
+      return fontFaceCalls
+    },
+    getLoadCalls: (): readonly FontFace[] => {
+      return loadCalls
+    },
+    wasLoadCalled: (fontFace: FontFace): boolean => {
+      return loadCalls.includes(fontFace)
+    },
+    wasFontFaceCreated: (name: string, url: string): boolean => {
+      return fontFaceCalls.some((call) => call.name === name && call.url === url)
     },
   }
 }
