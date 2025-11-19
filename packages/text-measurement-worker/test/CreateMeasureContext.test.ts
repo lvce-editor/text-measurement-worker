@@ -1,5 +1,10 @@
-import { expect, test } from '@jest/globals'
+import { beforeEach, expect, test } from '@jest/globals'
+import { mockOffscreenCanvas } from '../src/mockOffscreenCanvas.ts'
 import { createMeasureContext } from '../src/parts/CreateMeasureContext/CreateMeasureContext.ts'
+
+beforeEach(() => {
+  mockOffscreenCanvas()
+})
 
 test('createMeasureContext returns OffscreenCanvasRenderingContext2D', () => {
   const ctx = createMeasureContext()

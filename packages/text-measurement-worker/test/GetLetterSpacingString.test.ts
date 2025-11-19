@@ -1,5 +1,10 @@
-import { expect, test } from '@jest/globals'
+import { beforeEach, expect, test } from '@jest/globals'
+import { mockOffscreenCanvas } from '../src/mockOffscreenCanvas.ts'
 import * as GetLetterSpacingString from '../src/parts/GetLetterSpacingString/GetLetterSpacingString.ts'
+
+beforeEach(() => {
+  mockOffscreenCanvas()
+})
 
 test('getLetterSpacingString', () => {
   expect(GetLetterSpacingString.getLetterSpacingString(0)).toBe('0px')

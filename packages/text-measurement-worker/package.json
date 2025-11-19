@@ -34,9 +34,6 @@
       ]
     },
     "testEnvironment": "node",
-    "setupFiles": [
-      "<rootDir>/test/setup.ts"
-    ],
     "collectCoverage": true,
     "coverageThreshold": {
       "global": {
