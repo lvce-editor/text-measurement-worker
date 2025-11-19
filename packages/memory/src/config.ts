@@ -9,4 +9,4 @@ export const playwrightPath = new URL('../../e2e/node_modules/playwright/index.m
 
 export const instantiations = 5000
 
-export const instantiationsPath = join(root, 'packages', 'editor-commands-worker')
+export const instantiationsPath = join(root, 'packages', 'text-measurement-worker')

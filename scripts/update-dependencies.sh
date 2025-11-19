@@ -31,7 +31,7 @@ cd packages/build                                   && updateDependencies && cd 
 cd packages/e2e                                     && updateDependencies && cd ../.. &&
 cd packages/memory                                  && updateDependencies && cd ../.. &&
 cd packages/server                                  && updateDependencies && cd ../.. &&
-cd packages/editor-commands-worker                     && updateDependencies && cd ../.. &&
+cd packages/text-measurement-worker                     && updateDependencies && cd ../.. &&
 
 echo "Great Success!"
 

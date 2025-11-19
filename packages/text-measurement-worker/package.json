@@ -1,10 +1,10 @@
 {
-  "name": "@lvce-editor/editor-commands-worker",
+  "name": "@lvce-editor/text-measurement-worker",
   "version": "0.0.0-dev",
   "description": "Web Worker for the completion widget in Lvce Editor",
   "repository": {
     "type": "git",
-    "url": "git@github.com:lvce-editor/editor-commands-worker.git"
+    "url": "git@github.com:lvce-editor/text-measurement-worker.git"
   },
   "license": "MIT",
   "author": "Lvce Editor",

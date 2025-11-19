@@ -30,8 +30,8 @@
 // const remoteUrl = getRemoteUrl(workerPath)
 // if (!content.includes('// const completionWorkerUrl = ')) {
 //   await cp(rendererWorkerMainPath, rendererWorkerMainPath + '.original')
-//   const occurrence = `const completionWorkerUrl = \`\${assetDir}/packages/editor-commands-worker/dist/textMeasurementWorkerMain.js\``
-//   const replacement = `// const completionWorkerUrl = \`\${assetDir}/packages/editor-commands-worker/dist/textMeasurementWorkerMain.js\`
+//   const occurrence = `const completionWorkerUrl = \`\${assetDir}/packages/text-measurement-worker/dist/textMeasurementWorkerMain.js\``
+//   const replacement = `// const completionWorkerUrl = \`\${assetDir}/packages/text-measurement-worker/dist/textMeasurementWorkerMain.js\`
 //   const completionWorkerUrl = \`${remoteUrl}\``
 
 //   const newContent = content.replace(occurrence, replacement)

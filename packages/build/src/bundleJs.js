@@ -9,7 +9,7 @@ import { root } from './root.js'
  * @type {import('rollup').RollupOptions}
  */
 const options = {
-  input: join(root, 'packages/editor-commands-worker/src/textMeasurementWorkerMain.ts'),
+  input: join(root, 'packages/text-measurement-worker/src/textMeasurementWorkerMain.ts'),
   preserveEntrySignatures: 'strict',
   treeshake: {
     propertyReadSideEffects: false,

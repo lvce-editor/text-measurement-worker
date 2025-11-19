@@ -3,7 +3,7 @@
   "include": [],
   "references": [
     {
-      "path": "./packages/editor-commands-worker"
+      "path": "./packages/text-measurement-worker"
     },
     {
       "path": "./packages/build"

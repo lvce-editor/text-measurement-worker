@@ -9,7 +9,7 @@ const sharedProcessUrl = pathToFileURL(sharedProcessPath).toString()
 
 const sharedProcess = await import(sharedProcessUrl)
 
-process.env.PATH_PREFIX = '/editor-commands-worker'
+process.env.PATH_PREFIX = '/text-measurement-worker'
 await sharedProcess.exportStatic({
   root,
   extensionPath: '',
