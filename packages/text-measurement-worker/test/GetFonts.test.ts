@@ -1,17 +1,9 @@
 import { beforeEach, test, expect } from '@jest/globals'
 import * as GetFonts from '../src/parts/GetFonts/GetFonts.ts'
 import { mockOffscreenCanvas } from '../src/parts/MockOffscreenCanvas/MockOffscreenCanvas.ts'
+import { mockFonts } from '../src/parts/MockFonts/MockFonts.ts'
 
-if (!('document' in globalThis)) {
-  Object.defineProperty(globalThis, 'document', {
-    value: {
-      fonts: undefined,
-    },
-    writable: true,
-    configurable: true,
-    enumerable: true,
-  })
-}
+mockFonts()
 
 beforeEach(() => {
   mockOffscreenCanvas()
