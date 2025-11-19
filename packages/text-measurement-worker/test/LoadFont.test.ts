@@ -40,7 +40,6 @@ test('loadFont - success', async () => {
   expect(fontFaceConstructorCalled).toBe(true)
   expect(fontFaceConstructorArgs).toEqual([fontName, fontUrl, {}])
   expect(addedFontFaces).toEqual([mockFontFace])
-  
   ;(globalThis as any).fonts = originalFonts
   delete (globalThis as any).FontFace
 })
@@ -87,7 +86,6 @@ test('loadFont - throws VError when FontFace.load fails', async () => {
   ;(globalThis as any).fonts = mockFontFaceSet
 
   await expect(LoadFont.loadFont(fontName, fontUrl)).rejects.toThrow('Failed to load font TestFont')
-  
   ;(globalThis as any).fonts = originalFonts
   if (originalFontFace !== undefined) {
     globalThis.FontFace = originalFontFace
