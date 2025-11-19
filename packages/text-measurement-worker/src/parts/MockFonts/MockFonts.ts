@@ -47,7 +47,7 @@ export function mockFonts(options: MockFontsOptions = {}): MockFontsReturn {
       add: (fontFace: FontFace): void => {
         addedFonts.push(fontFace)
       },
-    } as FontFaceSet)
+    } as unknown as FontFaceSet)
 
   if (mockDocument && !('document' in globalThis)) {
     Object.defineProperty(globalThis, 'document', {
@@ -78,7 +78,9 @@ export function mockFonts(options: MockFontsOptions = {}): MockFontsReturn {
     // Default mock FontFace constructor
     // @ts-ignore - Setting global FontFace
     globalThis.FontFace = function (name: string, url: string, options?: FontFaceDescriptors): FontFace {
-      fontFaceCalls.push({ name, url, options })
+      fontFaceCalls.push(
+        options !== undefined ? { name, url, options } : { name, url },
+      )
       const mockFontFace = {
         load: async (): Promise<FontFace> => {
           loadCalls.push(mockFontFace)
