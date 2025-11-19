@@ -1,5 +1,10 @@
-import { expect, test } from '@jest/globals'
+import { beforeEach, expect, test } from '@jest/globals'
+import { mockOffscreenCanvas } from '../src/mockOffscreenCanvas.ts'
 import * as GetAccurateColumnIndexUnicode from '../src/parts/GetAccurateColumnIndexUnicode/GetAccurateColumnIndexUnicode.ts'
+
+beforeEach(() => {
+  mockOffscreenCanvas()
+})
 
 test.skip('getAccurateColumnIndexUnicode with simple text', () => {
   const result = GetAccurateColumnIndexUnicode.getAccurateColumnIndexUnicode('abc', 0, 6, 10, 400, 10, 'monospace', 0)
