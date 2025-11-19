@@ -1,6 +1,6 @@
 import { beforeEach, expect, test } from '@jest/globals'
-import { mockOffscreenCanvas } from '../src/parts/MockOffscreenCanvas/MockOffscreenCanvas.ts'
 import * as MeasureTextWidthFast from '../src/parts/MeasureTextWidthFast/MeasureTextWidthFast.ts'
+import { mockOffscreenCanvas } from '../src/parts/MockOffscreenCanvas/MockOffscreenCanvas.ts'
 
 beforeEach(() => {
   mockOffscreenCanvas()
