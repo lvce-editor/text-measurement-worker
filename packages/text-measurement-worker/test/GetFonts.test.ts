@@ -1,15 +1,28 @@
-/** @jest-environment jsdom */
 import { beforeEach, test, expect } from '@jest/globals'
 import * as GetFonts from '../src/parts/GetFonts/GetFonts.ts'
 import { mockOffscreenCanvas } from '../src/parts/MockOffscreenCanvas/MockOffscreenCanvas.ts'
+
+// @ts-ignore
+if (typeof document === 'undefined') {
+  // @ts-ignore
+  Object.defineProperty(globalThis, 'document', {
+    value: {
+      fonts: undefined,
+    },
+    writable: true,
+    configurable: true,
+    enumerable: true,
+  })
+}
 
 beforeEach(() => {
   mockOffscreenCanvas()
   // @ts-ignore
   delete globalThis.fonts
   // @ts-ignore
-  globalThis.document = {
-    fonts: undefined,
+  if (globalThis.document) {
+    // @ts-ignore
+    globalThis.document.fonts = undefined
   }
 })
 
