@@ -7,6 +7,10 @@ beforeEach(() => {
   mockOffscreenCanvas()
   // @ts-ignore
   delete globalThis.fonts
+  // @ts-ignore
+  globalThis.document = {
+    fonts: undefined,
+  }
 })
 
 test('getFonts returns globalThis.fonts when available', () => {
