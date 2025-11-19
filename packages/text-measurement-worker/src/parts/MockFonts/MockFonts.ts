@@ -6,8 +6,20 @@ interface MockFontsOptions {
   readonly mockDocument?: boolean
 }
 
-export function mockFonts(options: MockFontsOptions = {}): void {
+export function mockFonts(options: MockFontsOptions = {}): {
+  readonly [Symbol.dispose]: () => void
+} {
   const { fonts, FontFaceConstructor, useGlobalFonts = true, mockDocument = false } = options
+
+  // Store original values for cleanup
+  // @ts-ignore
+  const originalFonts = globalThis.fonts
+  // @ts-ignore
+  const originalDocumentFonts = globalThis.document?.fonts
+  // @ts-ignore
+  const originalFontFace = globalThis.FontFace
+  const documentCreated = mockDocument && !('document' in globalThis)
+  const fontFaceWasSet = FontFaceConstructor !== undefined || !('FontFace' in globalThis)
 
   if (mockDocument && !('document' in globalThis)) {
     Object.defineProperty(globalThis, 'document', {
@@ -47,5 +59,48 @@ export function mockFonts(options: MockFontsOptions = {}): void {
       } as FontFace
       return mockFontFace
     } as typeof FontFace
+  }
+
+  return {
+    [Symbol.dispose]: (): void => {
+      // Restore original fonts
+      if (useGlobalFonts) {
+        if (originalFonts === undefined) {
+          // @ts-ignore
+          delete globalThis.fonts
+        } else {
+          // @ts-ignore
+          globalThis.fonts = originalFonts
+        }
+      } else {
+        // @ts-ignore
+        if (globalThis.document) {
+          if (originalDocumentFonts === undefined) {
+            // @ts-ignore
+            globalThis.document.fonts = undefined
+          } else {
+            // @ts-ignore
+            globalThis.document.fonts = originalDocumentFonts
+          }
+        }
+      }
+
+      // Restore original FontFace
+      if (fontFaceWasSet) {
+        if (originalFontFace === undefined) {
+          // @ts-ignore
+          delete globalThis.FontFace
+        } else {
+          // @ts-ignore
+          globalThis.FontFace = originalFontFace
+        }
+      }
+
+      // Remove document if we created it
+      if (documentCreated) {
+        // @ts-ignore
+        delete globalThis.document
+      }
+    },
   }
 }
