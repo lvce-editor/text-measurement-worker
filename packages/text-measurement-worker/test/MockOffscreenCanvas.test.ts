@@ -1,4 +1,3 @@
-/** @jest-environment jsdom */
 import { beforeEach, test, expect } from '@jest/globals'
 import { mockOffscreenCanvas } from '../src/parts/MockOffscreenCanvas/MockOffscreenCanvas.ts'
 
