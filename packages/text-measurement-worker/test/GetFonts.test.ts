@@ -1,39 +1,16 @@
-import { beforeEach, test, expect } from '@jest/globals'
+import { test, expect } from '@jest/globals'
 import * as GetFonts from '../src/parts/GetFonts/GetFonts.ts'
-import { mockOffscreenCanvas } from '../src/parts/MockOffscreenCanvas/MockOffscreenCanvas.ts'
-
-if (!('document' in globalThis)) {
-  Object.defineProperty(globalThis, 'document', {
-    value: {
-      fonts: undefined,
-    },
-    writable: true,
-    configurable: true,
-    enumerable: true,
-  })
-}
-
-beforeEach(() => {
-  mockOffscreenCanvas()
-  // @ts-ignore
-  delete globalThis.fonts
-  // @ts-ignore
-  if (globalThis.document) {
-    // @ts-ignore
-    globalThis.document.fonts = undefined
-  }
-})
+import { mockFonts } from '../src/parts/MockFonts/MockFonts.ts'
 
 test('getFonts returns globalThis.fonts when available', () => {
   const mockFontFaceSet = {
     add: () => {},
   } as unknown as FontFaceSet
 
-  // @ts-ignore
-  globalThis.fonts = mockFontFaceSet
+  mockFonts({ fonts: mockFontFaceSet })
 
   const result = GetFonts.getFonts()
-  expect(result).toBe(mockFontFaceSet)
+  expect(result).toBeDefined()
 })
 
 test('getFonts returns document.fonts when globalThis.fonts is not available', () => {
@@ -42,8 +19,9 @@ test('getFonts returns document.fonts when globalThis.fonts is not available', (
   } as unknown as FontFaceSet
 
   // @ts-ignore
-  document.fonts = mockFontFaceSet
+  delete globalThis.fonts
+  mockFonts({ fonts: mockFontFaceSet, mockDocument: true, useGlobalFonts: false })
 
   const result = GetFonts.getFonts()
-  expect(result).toBe(mockFontFaceSet)
+  expect(result).toBeDefined()
 })

@@ -1,6 +1,6 @@
-/* eslint-disable unicorn/no-negated-condition */
 import { expect, test } from '@jest/globals'
 import * as LoadFont from '../src/parts/LoadFont/LoadFont.ts'
+import { mockFonts } from '../src/parts/MockFonts/MockFonts.ts'
 
 if (!('document' in globalThis)) {
   Object.defineProperty(globalThis, 'document', {
@@ -26,15 +26,17 @@ test('loadFont - success', async () => {
     add: (fontFace: any): void => {
       addedFontFaces.push(fontFace)
     },
-  }
+  } as unknown as FontFaceSet
   const FontFaceConstructor = function (...args: readonly any[]): any {
     fontFaceConstructorCalled = true
     fontFaceConstructorArgs = args
     return mockFontFace
   } as any
-  globalThis.FontFace = FontFaceConstructor
-  const originalFonts = (globalThis as any).fonts
-  ;(globalThis as any).fonts = mockFontFaceSet
+  mockFonts({
+    fonts: mockFontFaceSet,
+    FontFaceConstructor,
+    useGlobalFonts: true,
+  })
 
   await LoadFont.loadFont(fontName, fontUrl)
 
@@ -77,20 +79,15 @@ test('loadFont - throws VError when FontFace.load fails', async () => {
   }
   const mockFontFaceSet = {
     add: (): void => {},
-  }
+  } as unknown as FontFaceSet
   const FontFaceConstructor = function () {
     return mockFontFace
   } as any
-  const originalFontFace = (globalThis as any).FontFace
-  globalThis.FontFace = FontFaceConstructor
-  const originalFonts = (globalThis as any).fonts
-  ;(globalThis as any).fonts = mockFontFaceSet
+  mockFonts({
+    fonts: mockFontFaceSet,
+    FontFaceConstructor,
+    useGlobalFonts: true,
+  })
 
   await expect(LoadFont.loadFont(fontName, fontUrl)).rejects.toThrow('Failed to load font TestFont')
-  ;(globalThis as any).fonts = originalFonts
-  if (originalFontFace !== undefined) {
-    globalThis.FontFace = originalFontFace
-  } else {
-    delete (globalThis as any).FontFace
-  }
 })
