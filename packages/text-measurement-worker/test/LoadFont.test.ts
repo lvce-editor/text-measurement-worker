@@ -1,3 +1,4 @@
+/** @jest-environment jsdom */
 import { expect, test } from '@jest/globals'
 import * as LoadFont from '../src/parts/LoadFont/LoadFont.ts'
 

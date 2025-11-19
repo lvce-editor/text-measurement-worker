@@ -33,7 +33,7 @@
         }
       ]
     },
-    "testEnvironment": "jsdom",
+    "testEnvironment": "node",
     "setupFiles": [
       "<rootDir>/test/setup.ts"
     ],
