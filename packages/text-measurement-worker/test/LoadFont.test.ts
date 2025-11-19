@@ -5,7 +5,7 @@ test('loadFont - success', async () => {
   const fontName = 'TestFont'
   const fontUrl = 'url(./test-font.woff2)'
   let fontFaceConstructorCalled = false
-  let fontFaceConstructorArgs: any[] = []
+  let fontFaceConstructorArgs: readonly any[] = []
   const mockFontFace = {
     load: async (): Promise<void> => {},
   }
