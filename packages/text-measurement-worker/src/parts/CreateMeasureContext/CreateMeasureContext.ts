@@ -1,4 +1,4 @@
-export const createMeasureContext = () => {
+export const createMeasureContext = (): OffscreenCanvasRenderingContext2D => {
   const canvas = new OffscreenCanvas(0, 0)
   const ctx = /** @type {OffscreenCanvasRenderingContext2D} */ canvas.getContext('2d')
   if (!ctx) {

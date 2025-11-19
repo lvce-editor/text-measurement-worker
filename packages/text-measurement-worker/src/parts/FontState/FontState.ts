@@ -1,7 +1,7 @@
 const pending = Object.create(null)
 const loaded = Object.create(null)
 
-export const setPending = (id: string, promise: Promise<void>) => {
+export const setPending = (id: string, promise: Readonly<Promise<void>>): void => {
   pending[id] = promise
 }
 
