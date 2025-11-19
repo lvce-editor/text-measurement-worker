@@ -1,5 +1,4 @@
-import { beforeEach, expect, test } from '@jest/globals'
-import { mockOffscreenCanvas } from '../src/parts/MockOffscreenCanvas/MockOffscreenCanvas.ts'
+import { expect, test } from '@jest/globals'
 import * as TextSegmenter from '../src/parts/TextSegmenter/TextSegmenter.ts'
 
 test('visualIndex', () => {

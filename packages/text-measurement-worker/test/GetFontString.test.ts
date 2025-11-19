@@ -1,6 +1,5 @@
-import { beforeEach, expect, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import * as GetFontString from '../src/parts/GetFontString/GetFontString.ts'
-import { mockOffscreenCanvas } from '../src/parts/MockOffscreenCanvas/MockOffscreenCanvas.ts'
 
 test('getFontString', () => {
   const fontWeight = 400
