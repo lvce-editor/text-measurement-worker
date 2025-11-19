@@ -2,17 +2,6 @@ import { expect, test } from '@jest/globals'
 import * as LoadFont from '../src/parts/LoadFont/LoadFont.ts'
 import { mockFonts } from '../src/parts/MockFonts/MockFonts.ts'
 
-if (!('document' in globalThis)) {
-  Object.defineProperty(globalThis, 'document', {
-    value: {
-      fonts: undefined,
-    },
-    writable: true,
-    configurable: true,
-    enumerable: true,
-  })
-}
-
 test('loadFont - success', async () => {
   const fontName = 'TestFont'
   const fontUrl = 'url(./test-font.woff2)'
@@ -43,8 +32,6 @@ test('loadFont - success', async () => {
   expect(fontFaceConstructorCalled).toBe(true)
   expect(fontFaceConstructorArgs).toEqual([fontName, fontUrl, {}])
   expect(addedFontFaces).toEqual([mockFontFace])
-  ;(globalThis as any).fonts = originalFonts
-  delete (globalThis as any).FontFace
 })
 
 test('loadFont - throws error when fontName is not a string', async () => {
