@@ -158,4 +158,3 @@ test('measureText handles invalid letter spacing gracefully', () => {
   const metrics = context.measureText('hello')
   expect(metrics.width).toBe(30)
 })
-
