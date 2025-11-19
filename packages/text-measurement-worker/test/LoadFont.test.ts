@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 import { beforeEach, expect, test } from '@jest/globals'
-import { mockOffscreenCanvas } from '../src/mockOffscreenCanvas.ts'
+import { mockOffscreenCanvas } from '../src/parts/MockOffscreenCanvas/MockOffscreenCanvas.ts'
 import * as LoadFont from '../src/parts/LoadFont/LoadFont.ts'
 
 beforeEach(() => {
