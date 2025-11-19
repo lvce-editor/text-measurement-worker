@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-negated-condition */
 import { expect, test } from '@jest/globals'
 import * as LoadFont from '../src/parts/LoadFont/LoadFont.ts'
 
