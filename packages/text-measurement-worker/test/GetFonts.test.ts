@@ -3,7 +3,7 @@ import * as GetFonts from '../src/parts/GetFonts/GetFonts.ts'
 import { mockOffscreenCanvas } from '../src/parts/MockOffscreenCanvas/MockOffscreenCanvas.ts'
 import { mockFonts } from '../src/parts/MockFonts/MockFonts.ts'
 
-mockFonts()
+mockFonts({ mockDocument: true })
 
 beforeEach(() => {
   mockOffscreenCanvas()

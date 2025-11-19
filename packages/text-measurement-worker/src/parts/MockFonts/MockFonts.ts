@@ -3,12 +3,13 @@ interface MockFontsOptions {
   readonly fonts?: FontFaceSet
   readonly FontFaceConstructor?: typeof FontFace
   readonly useGlobalFonts?: boolean
+  readonly mockDocument?: boolean
 }
 
 export function mockFonts(options: MockFontsOptions = {}): void {
-  const { fonts, FontFaceConstructor, useGlobalFonts = true } = options
+  const { fonts, FontFaceConstructor, useGlobalFonts = true, mockDocument = false } = options
 
-  if (!('document' in globalThis)) {
+  if (mockDocument && !('document' in globalThis)) {
     Object.defineProperty(globalThis, 'document', {
       value: {
         fonts: undefined,
