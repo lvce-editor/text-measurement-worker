@@ -1,6 +1,5 @@
 import * as TextSegmenter from '../TextSegmenter/TextSegmenter.ts'
-
-const wordSeparators = ['.', '/', '?', '\\', '[', ']', '{', '}', '$', '%', '&', '<', '>', '|']
+import { wordSeparators } from '../WordSeparators/WordSeparators.ts'
 
 export const wordRight = (text: string): number => {
   const segmenter = TextSegmenter.create({ granularity: 'word', localeMatcher: 'best fit' })
