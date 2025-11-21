@@ -11,7 +11,7 @@ test('wordRight - ascii', () => {
   expect(wordRight(text)).toBe(3)
 })
 
-test('wordRight - accent', () => {
+test('wordRight - french accent', () => {
   const text = `cédille`
-  expect(wordRight(text)).toBe(1) // TODO
+  expect(wordRight(text)).toBe(7)
 })

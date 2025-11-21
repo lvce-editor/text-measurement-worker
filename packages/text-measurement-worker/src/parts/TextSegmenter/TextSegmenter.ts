@@ -7,6 +7,7 @@ export interface ITextSegmenterAdapter {
 
 export interface Options {
   readonly granularity?: 'word'
+  readonly localeMatcher?: 'best fit' | 'lookup'
 }
 
 export class TextSegmenterAdapter implements ITextSegmenterAdapter {
