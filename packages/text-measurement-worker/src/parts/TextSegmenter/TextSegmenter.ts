@@ -46,10 +46,6 @@ export class TextSegmenterAdapterClass implements TextSegmenterAdapter {
   }
 }
 
-export const supported = (): boolean => {
-  return 'Segmenter' in Intl
-}
-
 export const create = (): TextSegmenterAdapter => {
   return new TextSegmenterAdapterClass()
 }
