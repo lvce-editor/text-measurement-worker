@@ -1,11 +1,11 @@
-export interface TextSegmenterAdapter {
+export interface ITextSegmenterAdapter {
   readonly at: (line: string, index: number) => Intl.SegmentData | undefined
   readonly visualIndex: (line: string, index: number) => number
   readonly modelIndex: (line: string, visualIndex: number) => number
   readonly getSegments: (line: string) => Intl.Segments
 }
 
-export class TextSegmenterAdapterClass implements TextSegmenterAdapter {
+export class TextSegmenterAdapter implements ITextSegmenterAdapter {
   private readonly segmenter: Intl.Segmenter
 
   constructor() {
@@ -46,6 +46,6 @@ export class TextSegmenterAdapterClass implements TextSegmenterAdapter {
   }
 }
 
-export const create = (): TextSegmenterAdapter => {
-  return new TextSegmenterAdapterClass()
+export const create = (): ITextSegmenterAdapter => {
+  return new TextSegmenterAdapter()
 }
