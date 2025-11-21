@@ -5,11 +5,15 @@ export interface ITextSegmenterAdapter {
   readonly getSegments: (line: string) => Intl.Segments
 }
 
+export interface Options {
+  readonly granularity?: 'word'
+}
+
 export class TextSegmenterAdapter implements ITextSegmenterAdapter {
   private readonly segmenter: Intl.Segmenter
 
-  constructor() {
-    this.segmenter = new Intl.Segmenter()
+  constructor(options: Options) {
+    this.segmenter = new Intl.Segmenter('en', options)
   }
 
   at(line: string, index: number): Intl.SegmentData | undefined {
@@ -50,6 +54,6 @@ export const supported = (): boolean => {
   return 'Segmenter' in Intl
 }
 
-export const create = (): ITextSegmenterAdapter => {
-  return new TextSegmenterAdapter()
+export const create = (options: Options = {}): ITextSegmenterAdapter => {
+  return new TextSegmenterAdapter(options)
 }
