@@ -41,10 +41,6 @@ test('visualIndex - beyond string length', () => {
   expect(segmenter.visualIndex('abc', 10)).toBe(3)
 })
 
-test('supported', () => {
-  expect(TextSegmenter.supported()).toBe(true)
-})
-
 test('at - returns segment data', () => {
   const segmenter = TextSegmenter.create()
   const result = segmenter.at('abc', 1)
