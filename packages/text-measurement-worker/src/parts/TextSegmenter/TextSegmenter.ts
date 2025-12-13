@@ -1,8 +1,8 @@
 export interface ITextSegmenterAdapter {
   readonly at: (line: string, index: number) => Intl.SegmentData | undefined
-  readonly visualIndex: (line: string, index: number) => number
-  readonly modelIndex: (line: string, visualIndex: number) => number
   readonly getSegments: (line: string) => Intl.Segments
+  readonly modelIndex: (line: string, visualIndex: number) => number
+  readonly visualIndex: (line: string, index: number) => number
 }
 
 export interface Options {

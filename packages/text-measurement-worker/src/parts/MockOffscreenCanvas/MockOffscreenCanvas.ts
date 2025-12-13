@@ -27,7 +27,6 @@ class MockOffscreenCanvasRenderingContext2D {
     const width = textWidth + spacingWidth
 
     return {
-      width,
       actualBoundingBoxAscent: fontSize * 0.625,
       actualBoundingBoxDescent: fontSize * 0.125,
       actualBoundingBoxLeft: 0,
@@ -39,6 +38,7 @@ class MockOffscreenCanvasRenderingContext2D {
       fontBoundingBoxDescent: fontSize * 0.125,
       hangingBaseline: fontSize * 0.5,
       ideographicBaseline: fontSize * 0.5,
+      width,
     } as TextMetrics
   }
 }
