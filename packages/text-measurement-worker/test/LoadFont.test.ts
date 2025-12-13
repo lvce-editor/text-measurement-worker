@@ -22,8 +22,8 @@ test('loadFont - success', async () => {
     return mockFontFace
   } as any
   mockFonts({
-    fonts: mockFontFaceSet,
     FontFaceConstructor,
+    fonts: mockFontFaceSet,
     mockType: 'global',
   })
 
@@ -71,8 +71,8 @@ test('loadFont - throws VError when FontFace.load fails', async () => {
     return mockFontFace
   } as any
   mockFonts({
-    fonts: mockFontFaceSet,
     FontFaceConstructor,
+    fonts: mockFontFaceSet,
     mockType: 'global',
   })
 

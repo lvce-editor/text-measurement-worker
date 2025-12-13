@@ -2,28 +2,28 @@
 /* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 interface MockFontFaceCall {
   readonly name: string
-  readonly url: string
   readonly options?: FontFaceDescriptors
+  readonly url: string
 }
 
 interface MockFontsOptions {
-  readonly fonts?: FontFaceSet
   readonly FontFaceConstructor?: typeof FontFace
+  readonly fonts?: FontFaceSet
   readonly mockType?: 'document' | 'global'
   readonly onLoad?: (fontFace: FontFace) => Promise<FontFace> | FontFace
 }
 
 export interface MockFontsReturn {
-  readonly [Symbol.dispose]: () => void
   readonly getAddedFonts: () => readonly FontFace[]
   readonly getFontFaceCalls: () => readonly MockFontFaceCall[]
   readonly getLoadCalls: () => readonly FontFace[]
-  readonly wasLoadCalled: (fontFace: FontFace) => boolean
+  readonly [Symbol.dispose]: () => void
   readonly wasFontFaceCreated: (name: string, url: string) => boolean
+  readonly wasLoadCalled: (fontFace: FontFace) => boolean
 }
 
 export function mockFonts(options: MockFontsOptions = {}): MockFontsReturn {
-  const { fonts, FontFaceConstructor, mockType = 'global', onLoad } = options
+  const { FontFaceConstructor, fonts, mockType = 'global', onLoad } = options
   const useGlobalFonts = mockType === 'global'
   const mockDocument = mockType === 'document'
 
@@ -52,12 +52,12 @@ export function mockFonts(options: MockFontsOptions = {}): MockFontsReturn {
 
   if (mockDocument && !('document' in globalThis)) {
     Object.defineProperty(globalThis, 'document', {
+      configurable: true,
+      enumerable: true,
       value: {
         fonts: fontsToUse,
       },
       writable: true,
-      configurable: true,
-      enumerable: true,
     })
   }
 
@@ -79,7 +79,7 @@ export function mockFonts(options: MockFontsOptions = {}): MockFontsReturn {
     // Default mock FontFace constructor
     // @ts-ignore - Setting global FontFace
     globalThis.FontFace = function (name: string, url: string, options?: FontFaceDescriptors): FontFace {
-      fontFaceCalls.push(options !== undefined ? { name, url, options } : { name, url })
+      fontFaceCalls.push(options !== undefined ? { name, options, url } : { name, url })
       const mockFontFace = {
         load: async (): Promise<FontFace> => {
           loadCalls.push(mockFontFace)
@@ -94,6 +94,15 @@ export function mockFonts(options: MockFontsOptions = {}): MockFontsReturn {
   }
 
   return {
+    getAddedFonts: (): readonly FontFace[] => {
+      return addedFonts
+    },
+    getFontFaceCalls: (): readonly MockFontFaceCall[] => {
+      return fontFaceCalls
+    },
+    getLoadCalls: (): readonly FontFace[] => {
+      return loadCalls
+    },
     [Symbol.dispose]: (): void => {
       // Restore original fonts
       if (useGlobalFonts) {
@@ -134,20 +143,11 @@ export function mockFonts(options: MockFontsOptions = {}): MockFontsReturn {
         delete globalThis.document
       }
     },
-    getAddedFonts: (): readonly FontFace[] => {
-      return addedFonts
-    },
-    getFontFaceCalls: (): readonly MockFontFaceCall[] => {
-      return fontFaceCalls
-    },
-    getLoadCalls: (): readonly FontFace[] => {
-      return loadCalls
+    wasFontFaceCreated: (name: string, url: string): boolean => {
+      return fontFaceCalls.some((call) => call.name === name && call.url === url)
     },
     wasLoadCalled: (fontFace: FontFace): boolean => {
       return loadCalls.includes(fontFace)
-    },
-    wasFontFaceCreated: (name: string, url: string): boolean => {
-      return fontFaceCalls.some((call) => call.name === name && call.url === url)
     },
   }
 }
