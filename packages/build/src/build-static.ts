@@ -27,9 +27,9 @@ const content = await readFile(rendererWorkerPath, 'utf8')
 const workerPath = join(root, '.tmp/dist/dist/textMeasurementWorkerMain.js')
 const remoteUrl = getRemoteUrl(workerPath)
 
-const occurrence = `// const textMeasurementWorkerUrl = \`\${assetDir}/packages/textMeasurementker/dist/textMeasurementWorkerMain.js\`
+const occurrence = `// const textMeasurementWorkerUrl = \`\${assetDir}/packages/text-measurement-worker/dist/textMeasurementWorkerMain.js\`
 const textMeasurementWorkerUrl = \`${remoteUrl}\``
-const replacement = `const textMeasurementWorkerUrl = \`\${assetDir}/packages/textMeasurementker/dist/textMeasurementWorkerMain.js\``
+const replacement = `const textMeasurementWorkerUrl = \`\${assetDir}/packages/text-measurement-worker/dist/textMeasurementWorkerMain.js\``
 if (!content.includes(occurrence)) {
   throw new Error('occurrence not found')
 }
