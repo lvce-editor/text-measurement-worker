@@ -2,6 +2,7 @@ import * as Font from '../Font/Font.ts'
 import * as GetAccurateColumnIndexUnicode from '../GetAccurateColumnIndexUnicode/GetAccurateColumnIndexUnicode.ts'
 import * as HandleMessagePort from '../HandleMessagePort/HandleMessagePort.ts'
 import * as MeasureTextWidth from '../MeasureTextWidth/MeasureTextWidth.ts'
+import { measureTextWidths } from '../MeasureTextWidths/MeasureTextWidths.ts'
 import { wordRight } from '../WordRight/WordRight.ts'
 
 export const commandMap = {
@@ -9,5 +10,6 @@ export const commandMap = {
   'TextMeasurement.getAccurateColumnIndexUnicode': GetAccurateColumnIndexUnicode.getAccurateColumnIndexUnicode,
   'TextMeasurement.handleMessagePort': HandleMessagePort.handleMessagePort,
   'TextMeasurement.measureTextWidth': MeasureTextWidth.measureTextWidth,
+  'TextMeasurement.measureTextWidths': measureTextWidths,
   'TextMeasurement.wordRight': wordRight,
 }
