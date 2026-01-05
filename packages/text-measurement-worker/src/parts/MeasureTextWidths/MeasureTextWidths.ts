@@ -9,7 +9,7 @@ export const measureTextWidths = (
   isMonoSpaceFont: boolean,
   charWidth: number,
 ): readonly number[] => {
-  const widths=texts.map(text=>{
+  const widths = texts.map((text) => {
     return measureTextWidth(text, fontWeight, fontSize, fontFamily, letterSpacing, isMonoSpaceFont, charWidth)
   })
   return widths
