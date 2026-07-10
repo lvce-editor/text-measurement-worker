@@ -9,6 +9,7 @@ export default [
   {
     rules: {
       'unicorn/consistent-function-scoping': 'off',
+      '@typescript-eslint/only-throw-error': 'off',
     },
   },
 ]
