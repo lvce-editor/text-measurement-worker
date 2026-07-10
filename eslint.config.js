@@ -9,6 +9,8 @@ export default [
   {
     rules: {
       'unicorn/consistent-function-scoping': 'off',
+      '@typescript-eslint/await-thenable': 'off',
+      '@typescript-eslint/prefer-readonly-parameter-types': 'off',
       '@typescript-eslint/only-throw-error': 'off',
     },
   },
