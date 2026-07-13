@@ -1,5 +1,4 @@
 /* eslint-disable unicorn/no-negated-condition */
-/* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 interface MockFontFaceCall {
   readonly name: string
   readonly options?: FontFaceDescriptors
