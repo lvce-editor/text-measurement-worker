@@ -2,6 +2,7 @@ import { cp, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { root } from './root.js'
+import { buildE2eExtensions } from './buildE2eExtensions.ts'
 
 const sharedProcess = await import('@lvce-editor/shared-process')
 
@@ -11,6 +12,8 @@ const { commitHash } = await sharedProcess.exportStatic({
   extensionPath: '',
   testPath: 'packages/e2e',
 })
+
+await buildE2eExtensions()
 
 const rendererWorkerPath = join(root, 'dist', commitHash, 'packages', 'renderer-worker', 'dist', 'rendererWorkerMain.js')
 
