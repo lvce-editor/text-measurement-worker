@@ -10,7 +10,7 @@
   "scripts": {
     "build": "node packages/build/src/build.js",
     "build:static": "node packages/build/src/build-static.ts",
-    "build:watch": "./packages/build/node_modules/.bin/esbuild --format=esm --bundle --external:node:buffer --external:electron --external:ws --external:node:worker_threads --watch packages/text-measurement-worker/src/textMeasurementWorkerMain.ts --outfile=.tmp/dist/dist/textMeasurementWorkerMain.js",
+    "build:watch": "npm exec --workspace=packages/build -- esbuild --format=esm --bundle --external:node:buffer --external:electron --external:ws --external:node:worker_threads --watch ../text-measurement-worker/src/textMeasurementWorkerMain.ts --outfile=../../.tmp/dist/dist/textMeasurementWorkerMain.js",
     "dev": "node packages/build/src/dev.js",
     "format": "prettier --write .",
     "lint": "eslint . && prettier --check .",
