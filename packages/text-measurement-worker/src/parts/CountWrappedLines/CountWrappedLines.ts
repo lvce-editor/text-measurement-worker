@@ -9,27 +9,17 @@ export const countWrappedLines = (text: string, width: number, measureText: (tex
   let currentLine = ''
   const words = text.trim().split(/\s+/)
   for (const word of words) {
-    const candidate = currentLine ? `${currentLine} ${word}` : word
-    if (measureText(candidate) <= width) {
-      currentLine = candidate
-      continue
-    }
-    if (currentLine) {
-      lineCount++
-      currentLine = ''
-    }
-    if (measureText(word) <= width) {
-      currentLine = word
-      continue
-    }
-    for (const character of word) {
-      const characterCandidate = `${currentLine}${character}`
-      if (currentLine && measureText(characterCandidate) > width) {
+    const segments = word.match(/.*?-(?=.)|.+/g) || ['']
+    for (let index = 0; index < segments.length; index++) {
+      const segment = segments[index]
+      const separator = index === 0 && currentLine ? ' ' : ''
+      const candidate = `${currentLine}${separator}${segment}`
+      if (currentLine && measureText(candidate) > width) {
         lineCount++
-        currentLine = character
+        currentLine = segment
         continue
       }
-      currentLine = characterCandidate
+      currentLine = candidate
     }
   }
   return lineCount
