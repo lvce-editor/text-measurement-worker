@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 // Mock OffscreenCanvasRenderingContext2D for Node.js environment
 class MockOffscreenCanvasRenderingContext2D {
   canvas: OffscreenCanvas
@@ -39,7 +38,7 @@ class MockOffscreenCanvasRenderingContext2D {
       hangingBaseline: fontSize * 0.5,
       ideographicBaseline: fontSize * 0.5,
       width,
-    } as TextMetrics
+    }
   }
 }
 
