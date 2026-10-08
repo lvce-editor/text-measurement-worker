@@ -26,9 +26,14 @@ const content = await readFile(rendererWorkerPath, 'utf8')
 const workerPath = join(root, '.tmp/dist/dist/textMeasurementWorkerMain.js')
 const remoteUrl = getRemoteUrl(workerPath)
 
-const occurrence = `// const textMeasurementWorkerUrl = \`\${assetDir}/packages/text-measurement-worker/dist/textMeasurementWorkerMain.js\`
+const legacyOccurrence = `// const textMeasurementWorkerUrl = \`\${assetDir}/packages/text-measurement-worker/dist/textMeasurementWorkerMain.js\`
 const textMeasurementWorkerUrl = \`${remoteUrl}\``
-const replacement = `const textMeasurementWorkerUrl = \`\${assetDir}/packages/text-measurement-worker/dist/textMeasurementWorkerMain.js\``
+const legacyReplacement = `const textMeasurementWorkerUrl = \`\${assetDir}/packages/text-measurement-worker/dist/textMeasurementWorkerMain.js\``
+const currentOccurrence = `\`${remoteUrl}\``
+const currentReplacement = `\`\${assetDir}/packages/text-measurement-worker/dist/textMeasurementWorkerMain.js\``
+const runtimeOccurrence = `\`\${assetDir}/packages/renderer-worker/node_modules/@lvce-editor/text-measurement-worker/dist/textMeasurementWorkerMain.js\``
+const occurrence = content.includes(legacyOccurrence) ? legacyOccurrence : content.includes(currentOccurrence) ? currentOccurrence : runtimeOccurrence
+const replacement = content.includes(legacyOccurrence) ? legacyReplacement : currentReplacement
 if (!content.includes(occurrence)) {
   throw new Error('occurrence not found')
 }
