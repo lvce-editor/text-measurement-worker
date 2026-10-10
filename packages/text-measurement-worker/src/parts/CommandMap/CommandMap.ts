@@ -1,5 +1,6 @@
 import * as Font from '../Font/Font.ts'
 import * as GetAccurateColumnIndexUnicode from '../GetAccurateColumnIndexUnicode/GetAccurateColumnIndexUnicode.ts'
+import * as GetGraphemeSegments from '../GetGraphemeSegments/GetGraphemeSegments.ts'
 import { getPosition } from '../GetPosition/GetPosition.ts'
 import * as HandleMessagePort from '../HandleMessagePort/HandleMessagePort.ts'
 import { measureTextBlockHeight } from '../MeasureTextBlockHeight/MeasureTextBlockHeight.ts'
@@ -10,6 +11,7 @@ import { wordRight } from '../WordRight/WordRight.ts'
 export const commandMap = {
   'TextMeasurement.ensureFont': Font.ensure,
   'TextMeasurement.getAccurateColumnIndexUnicode': GetAccurateColumnIndexUnicode.getAccurateColumnIndexUnicode,
+  'TextMeasurement.getGraphemeSegments': GetGraphemeSegments.getGraphemeSegments,
   'TextMeasurement.getPosition': getPosition,
   'TextMeasurement.handleMessagePort': HandleMessagePort.handleMessagePort,
   'TextMeasurement.measureTextBlockHeight': measureTextBlockHeight,
