@@ -40,8 +40,8 @@ test('segments printable ASCII and tabs without initializing Intl.Segmenter', ()
 })
 
 test('matches Unicode grapheme segmentation for ASCII and mixed content', () => {
-  const ascii = Array.from({ length: 95 }, (_, index) => String.fromCharCode(index + 32)).join('')
-  const lines = [ascii, 'hello\tworld', '\r\n', 'a\r\nb', 'a\u0301', '\u{1f1fa}\u{1f1f8}', 'a\u{1f469}\u200d\u{1f4bb}b']
+  const ascii = Array.from({ length: 95 }, (_, index) => String.fromCodePoint(index + 32)).join('')
+  const lines = [ascii, 'hello\tworld', '\r\n', 'a\r\nb', 'a\u{301}', '\u{1F1FA}\u{1F1F8}', 'a\u{1F469}\u{200D}\u{1F4BB}b']
   const segmenter = new Intl.Segmenter(undefined, { granularity: 'grapheme' })
   const expected = lines.map((line) => [...Array.from(segmenter.segment(line), ({ index }) => index), line.length])
   expect(getGraphemeSegments(lines)).toEqual(expected)
