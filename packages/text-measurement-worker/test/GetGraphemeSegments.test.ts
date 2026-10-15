@@ -21,3 +21,28 @@ test('falls back to code-point boundaries when Intl.Segmenter is unavailable', (
     Object.defineProperty(Intl, 'Segmenter', { configurable: true, value: segmenter })
   }
 })
+
+test('segments printable ASCII and tabs without initializing Intl.Segmenter', () => {
+  const segmenter = Intl.Segmenter
+  Object.defineProperty(Intl, 'Segmenter', {
+    configurable: true,
+    value: class {
+      constructor() {
+        throw new Error('ASCII segmentation must not initialize ICU')
+      }
+    },
+  })
+  try {
+    expect(getGraphemeSegments(['hello world', '\t', ''])).toEqual([[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], [0, 1], [0]])
+  } finally {
+    Object.defineProperty(Intl, 'Segmenter', { configurable: true, value: segmenter })
+  }
+})
+
+test('matches Unicode grapheme segmentation for ASCII and mixed content', () => {
+  const ascii = Array.from({ length: 95 }, (_, index) => String.fromCharCode(index + 32)).join('')
+  const lines = [ascii, 'hello\tworld', '\r\n', 'a\r\nb', 'a\u0301', '\u{1f1fa}\u{1f1f8}', 'a\u{1f469}\u200d\u{1f4bb}b']
+  const segmenter = new Intl.Segmenter(undefined, { granularity: 'grapheme' })
+  const expected = lines.map((line) => [...Array.from(segmenter.segment(line), ({ index }) => index), line.length])
+  expect(getGraphemeSegments(lines)).toEqual(expected)
+})
